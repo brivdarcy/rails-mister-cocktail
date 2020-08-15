@@ -1,7 +1,21 @@
 <container>
+<div id="carousel" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+        <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" class="d-block w-100">
+    </div>
+    <div class="carousel-item">
+      <img src="https://images.unsplash.com/photo-1591243315780-978fd00ff9db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" class="d-block w-100">
+    </div>
+    <div class="carousel-item">
+      <img src="https://images.unsplash.com/photo-1558383409-ab7ef8db3e01?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" class="d-block w-100">
+    </div>
+  </div>
+</div>
+<%#= cl_image_tag("https://res.cloudinary.com/dlf5qctbl/image/upload/v1597411392/pbjetwa1gcj9aktyil7i.jpg",
+  crop: :fill, class:"banner") %>
 
-<%= cl_image_tag("https://res.cloudinary.com/dlf5qctbl/image/upload/v1597411392/pbjetwa1gcj9aktyil7i.jpg",
-  width: 400, height: 300, crop: :fill) %>
+
 
 <h1>Cocktailmania</h1>
 
@@ -9,10 +23,18 @@
 <div class="cards">
   <% @cocktails.each do |cocktail| %>
     <%= link_to cocktail_path(cocktail.id) do %>
-      <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://source.unsplash.com/400x400/?<%= cocktail.name %>)">
-        <h2><%= cocktail.name %></h2>
-        <p><%= cocktail.description %></p>
-      </div>
+<!--       <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://source.unsplash.com/400x400/?<%#= cocktail.name %>)"> -->
+      <% if cocktail.photo.attached? %>
+        <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('<%= cl_image_path cocktail.photo.key, height: 300, width: 400, crop: :fill %>')">
+          <h2><%= cocktail.name %></h2>
+          <p><%= cocktail.description %></p>
+        </div>
+      <% else %>
+          <div class="card-category">
+            <h2><%= cocktail.name %></h2>
+            <p><%= cocktail.description %></p>
+          </div>
+        <% end %>
     <% end %>
   <% end %>
 </div>
